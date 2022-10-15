@@ -45,7 +45,7 @@ function ProjectDetail({
   )
   return (
     <>
-      <Backdrop key={isLoading} className="backdrop" open={isLoading}>
+      <Backdrop key={isLoading??false} className="backdrop" open={isLoading??false}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <Snackbar open={creationTxn !== undefined} autoHideDuration={6000} anchorOrigin={{ vertical:'top', horizontal:'center'}}>

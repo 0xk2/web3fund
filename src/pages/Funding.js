@@ -231,7 +231,7 @@ function Funding() {
   });
   useWaitForTransaction({
     hash: disperseTxnHash,
-    onSuccess: function(daa) {
+    onSuccess: function(data) {
       setSuccessMessage('Successfully sent check your share balance');
       // console.log('depositTxn: ',data);
       setLoading(false);

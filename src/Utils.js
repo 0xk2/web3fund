@@ -167,6 +167,7 @@ export const formatDisperseText = function(text, decimal, maxToSend) {
     total: 0
   };
   let total = 0;
+  text=text??'';
   text.split('\n').forEach(str => {
     for(var i=0;i<seperators.length;i++){
       if(str.indexOf(seperators[i]) !== -1){
