@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import axios from 'axios';
-import { useAccount, useContractReads, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
+import { useAccount, useContractEvent, useContractReads, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { ShareTokenAbi, AssetTokenAbi, DisperseAbi, DisperseContractAddress } from '../config';
 import { useParams } from 'react-router-dom';
 import { BigNumber, ethers } from 'ethers';
@@ -112,16 +112,15 @@ function Funding() {
       if(data[3] !== ""){
         setShareTokenAbout(await loadNotionContent(axios, data[3]));
       }
-      setShareTokenTotalSupply(data[4]);
+      setShareTokenTotalSupply(data[4]  ?? BigNumber.from(0));
       setAssetAddress(data[5]);
-      setMyShare(data[6]);
+      setMyShare(data[6] ?? BigNumber.from(0));
       setAssetSymbol(data[7]);
-      setTotalAsset(data[8]);
-      setMyAsset(data[9]);
+      setTotalAsset(data[8] ?? BigNumber.from(0));
+      setMyAsset(data[9] ?? BigNumber.from(0));
       setShareTokenDecimal(data[10]);
       setAssetTokenDecimal(data[11]);
       setDisperseAllowance(data[12]);
-      // console.log(data);
       setLoading(false);
     }
   })
@@ -254,18 +253,30 @@ function Funding() {
   const allowDisperse = useContractWrite({
     ...prepareDisperseAllowance,
     onSuccess: function({hash}){
-    setDisperseAllowanceTxnHasnh(hash);
+      setDisperseAllowanceTxnHasnh(hash);
     }
   });
   useWaitForTransaction({
     hash: disperseAllownaceTxnHash,
-    onSuccess: function(daa) {
+    onSuccess: function(data) {
       setSuccessMessage('Successfully approve Disperse contract');
       // console.log('depositTxn: ',data);
       setLoading(false);
       contractRead.refetch();
     }
   }); 
+  /**
+   * Redeem event
+   */
+  useContractEvent({
+    ...shareTokenContract,
+    eventName: "Redeemed",
+    listener: (node, label, owner) => {
+      const iface = new ethers.utils.Interface(ShareTokenAbi);
+      console.log(iface.parseLog(node[2]));
+      console.log("node:",node);
+    }
+  })
 
   const previewProps = {
     name: shareTokenName, avatarBase64: avatar, symbol: shareTokenSymbol, totalSupply: shareTokenTotalSupply, 

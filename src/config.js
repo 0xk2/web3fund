@@ -52,7 +52,8 @@ export const ShareTokenAbi = [
   "function transfer(address, uint256)",
   "function burn(uint256)",
   "function allowance(address, address) public view  returns (uint256)",
-  "function approve(address, uint256) returns (bool)"
+  "function approve(address, uint256) returns (bool)",
+  "event Redeemed(address indexed, uint256)"
 ]
 
 export const AssetTokenAbi = [
@@ -60,6 +61,7 @@ export const AssetTokenAbi = [
   "function name() public view returns (string)",
   "function symbol() public view returns (string)",
   "function decimals() public view returns (uint256)",
+  "function totalSupply() public view returns (uint256)",
   "function transfer(address, uint256)",
   "function mint(uint256, address)"
 ]

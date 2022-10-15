@@ -36,6 +36,7 @@ function ProjectDetail({
   
   const [isPreviewDisperse, setPreviewDisperse] = useState(false);
   const _maxToRedeem = parseFloat(formatUnits(myShare, shareTokenDecimal.toNumber()));
+  const _maxToReceive = redeemable({shareToRedeem: _maxToRedeem, shareTokenDecimal, totalSupply, assetTokenDecimal, totalAsset});
   const _formatedDisperse = formatDisperseText(toDisperse, shareTokenDecimal, _maxToRedeem);
   const _pct = totalSupply.toString() === '0' || !totalSupply? 0:
   formatLargeNumber(
@@ -94,8 +95,20 @@ function ProjectDetail({
       { selectedTab === 1 ?
       <Paper elevation={3} sx={{marginTop: "32px", marginBottom: "32px", padding: "32px"}}>
         <Box className="ipt">
-          <Box className="lbl">Your funding share</Box>
-          <Box className="val">{readableBigNumber(myShare, shareTokenDecimal)} {symbol} - {_pct}% of the Total Asset</Box>
+          <Box className="lbl">Your share</Box>
+          <Box className="val">
+            You can redeem maximum &nbsp;
+            <Chip 
+              color="primary" variant="primary" size="medium" label={readableBigNumber(myShare, shareTokenDecimal)+' '+symbol}
+            /> &nbsp;
+            {/* {_pct}% of total Asset. You can redeem maximum   */} for &nbsp;
+            <Chip
+              color="primary" variant="primary" size="medium" label={_maxToReceive+" "+assetSymbol} />
+            </Box>
+        </Box>
+        <Box className="ipt">
+          <Box className="lbl">Your asset balance</Box>
+          <Box className="val">{readableBigNumber(myAsset, assetTokenDecimal)??0} {assetSymbol}</Box>
         </Box>
         <Box className="ipt">
           <Box className="lbl">Redeem</Box>
