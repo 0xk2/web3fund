@@ -20,7 +20,7 @@ function Funding() {
   const [avatar, setAvatar] = useState('');
   const [shareTokenAbout, setShareTokenAbout] = useState('');
   const [shareTokenSymbol, setShareTokenSymbol] = useState('');
-  const [shareTokenTotalSupply, setShareTokenTotalSupply] = useState('');
+  const [shareTokenTotalSupply, setShareTokenTotalSupply] = useState(BigNumber.from(0));
   
   const [myShare, setMyShare] = useState(BigNumber.from(0));
   const [myAsset, setMyAsset] = useState(BigNumber.from(0));
