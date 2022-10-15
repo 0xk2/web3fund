@@ -38,7 +38,7 @@ function ProjectDetail({
   const _maxToRedeem = parseFloat(formatUnits(myShare, shareTokenDecimal.toNumber()));
   const _maxToReceive = redeemable({shareToRedeem: _maxToRedeem, shareTokenDecimal, totalSupply, assetTokenDecimal, totalAsset});
   const _formatedDisperse = formatDisperseText(toDisperse, shareTokenDecimal, _maxToRedeem);
-  const _pct = totalSupply.toString() === '0' || !totalSupply? 0:
+  // const _pct = totalSupply.toString() === '0' || !totalSupply? 0:
   formatLargeNumber(
     parseFloat(myShare.div(BigNumber.from(10).pow(shareTokenDecimal.toNumber())).toString()) / 
     parseFloat(totalSupply.div(BigNumber.from(10).pow(shareTokenDecimal.toNumber())).toString())

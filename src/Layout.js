@@ -37,7 +37,7 @@ function Layout() {
       setHelp(true);
     }
     fn();
-  }, [setBackdropState, loadNotionContent])
+  }, [setBackdropState])
   return <ThemeProvider theme={theme}>
     <Dialog open={isHelp} onClose={closeDialog} sx={{minWidth:"768px"}}>
       <DialogContent>
